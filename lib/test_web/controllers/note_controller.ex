@@ -6,13 +6,13 @@ defmodule TestWeb.NoteController do
 
   action_fallback TestWeb.FallbackController
 
+  # retorna todas as notas
   def index(conn, _params) do
     notes = Notes.list_notes()
     render(conn, :index, notes: notes)
   end
 
-
-
+  # cria uma nova nota
   def create(conn, %{"title" => title, "content" => content}) do
     note_params = %{"title" => title, "content" => content}
 
@@ -23,19 +23,21 @@ defmodule TestWeb.NoteController do
     end
   end
 
+  # retorna uma nota especifica pelo id
   def show(conn, %{"id" => id}) do
     note = Notes.get_note!(id)
     render(conn, :show, note: note)
   end
 
-  def update(conn, %{"id" => id, "note" => note_params}) do
+  def update(conn, %{"id" => id, "content" => content, "title" => title}) do
     note = Notes.get_note!(id)
 
-    with {:ok, %Note{} = note} <- Notes.update_note(note, note_params) do
+    with {:ok, %Note{} = note} <- Notes.update_note(note, %{content: content, title: title}) do
       render(conn, :show, note: note)
     end
   end
 
+  # deleta uma nota
   def delete(conn, %{"id" => id}) do
     note = Notes.get_note!(id)
 
