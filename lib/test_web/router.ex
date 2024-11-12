@@ -9,20 +9,30 @@ defmodule TestWeb.Router do
     pipe_through :api
   end
 
-  scope "/", TestWeb do
+  # rotas de usuario
+  scope "/users", TestWeb do
     pipe_through :api
 
      # retorna todos os usuarios
-    get "/users", UserController, :index
+    get "/", UserController, :index
 
     # cria um usuário
-    post "/users/simple", UserController, :create_simple
+    post "/simple", UserController, :create_simple
 
     # retorna um usuário
-    get "/users/:id", UserController, :get_user
+    get "/:id", UserController, :get_user
 
-    delete "/users/:id", UserController, :delete
+    delete "/:id", UserController, :delete
   end
+
+
+  # rotas de notas
+  scope "/", TestWeb do
+    pipe_through :api
+
+    resources "/notes", NoteController
+  end
+
 
   # Enable LiveDashboard in development
   if Application.compile_env(:test, :dev_routes) do
