@@ -101,4 +101,9 @@ defmodule Test.Notes do
   def change_note(%Note{} = note, attrs \\ %{}) do
     Note.changeset(note, attrs)
   end
+
+  def getUserNotes(user_id) do
+    Repo.all(from n in Note, where: n.user_id == ^user_id)
+  end
+
 end

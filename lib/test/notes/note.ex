@@ -5,6 +5,7 @@ defmodule Test.Notes.Note do
   schema "notes" do
     field :title, :string
     field :content, :string
+    belongs_to :user, Test.Accounts.User
 
     timestamps(type: :utc_datetime)
   end
@@ -12,7 +13,7 @@ defmodule Test.Notes.Note do
   @doc false
   def changeset(note, attrs) do
     note
-    |> cast(attrs, [:title, :content])
-    |> validate_required([:title, :content])
+    |> cast(attrs, [:title, :content, :user_id])
+    |> validate_required([:title, :content, :user_id])
   end
 end

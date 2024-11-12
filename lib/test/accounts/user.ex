@@ -5,6 +5,7 @@ defmodule Test.Accounts.User do
   schema "users" do
     field :name, :string
     field :email, :string
+    has_many :notes, Test.Notes.Note
 
     timestamps()
   end

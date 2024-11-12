@@ -31,6 +31,7 @@ defmodule TestWeb.Router do
     pipe_through :api
 
     resources "/notes", NoteController
+    get "/notes/user/:user_id", NoteController, :getUserNotes
   end
 
 

@@ -13,8 +13,8 @@ defmodule TestWeb.NoteController do
   end
 
   # cria uma nova nota
-  def create(conn, %{"title" => title, "content" => content}) do
-    note_params = %{"title" => title, "content" => content}
+  def create(conn, %{"title" => title, "content" => content ,"user_id" => user_id }) do
+    note_params = %{"title" => title, "content" => content, "user_id" => user_id}
 
     with {:ok, %Note{} = note} <- Notes.create_note(note_params) do
       conn
@@ -28,6 +28,13 @@ defmodule TestWeb.NoteController do
     note = Notes.get_note!(id)
     render(conn, :show, note: note)
   end
+
+
+  def getUserNotes(conn, %{"user_id" => user_id}) do
+    notes = Notes.getUserNotes(user_id)
+    render(conn, :index, notes: notes)
+  end
+
 
   def update(conn, %{"id" => id, "content" => content, "title" => title}) do
     note = Notes.get_note!(id)
