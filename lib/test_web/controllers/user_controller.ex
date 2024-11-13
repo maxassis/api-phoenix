@@ -3,6 +3,8 @@ defmodule TestWeb.UserController do
   alias Test.Accounts
 
   def create_simple(conn, user_params) do
+    IO.inspect(user_params)
+
     case Accounts.create_simple_user(user_params) do
       {:ok, user} ->
         conn
@@ -13,7 +15,6 @@ defmodule TestWeb.UserController do
             id: user.id,
             name: user.name,
             email: user.email,
-            inserted_at: user.inserted_at
           }
         })
 
