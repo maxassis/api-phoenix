@@ -1,8 +1,8 @@
 defmodule Test.Accounts.Verify do
   alias Test.Accounts
 
-  def call(%{"id" => id, "password" => password}) do
-    case Accounts.get_user(id) do
+  def call(%{"email" => email, "password" => password}) do
+    case Accounts.get_user_by_email(email) do
       nil ->
         {:error, "Usuário não encontrado"}
 
