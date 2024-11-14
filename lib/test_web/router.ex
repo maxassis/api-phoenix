@@ -5,8 +5,8 @@ defmodule TestWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", TestWeb do
-    pipe_through :api
+  pipeline :auth do
+    plug TestWeb.Plugs.Auth
   end
 
   # rotas de usuario
@@ -28,20 +28,22 @@ defmodule TestWeb.Router do
 
   # rotas de notas
   scope "/", TestWeb do
-    pipe_through :api
+    pipe_through [:api, :auth]
 
     resources "/notes", NoteController
     get "/notes/user/:user_id", NoteController, :getUserNotes
   end
 
+  # rotas de login
+  scope "/", TestWeb do
+    pipe_through :api
+
+    post "/login", UserController, :login
+  end
+
 
   # Enable LiveDashboard in development
   if Application.compile_env(:test, :dev_routes) do
-    # If you want to use the LiveDashboard in production, you should put
-    # it behind authentication and allow only admins to access it.
-    # If your application does not have an admins-only section yet,
-    # you can use Plug.BasicAuth to set up some basic authentication
-    # as long as you are also using SSL (which you should anyway).
     import Phoenix.LiveDashboard.Router
 
     scope "/dev" do

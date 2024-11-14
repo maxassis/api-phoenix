@@ -1,6 +1,8 @@
 defmodule TestWeb.UserController do
   use TestWeb, :controller
   alias Test.Accounts
+  alias TestWeb.Token
+  alias Test.Accounts.Verify
 
   def create_simple(conn, user_params) do
     IO.inspect(user_params)
@@ -91,4 +93,25 @@ defmodule TestWeb.UserController do
         |> json(%{error: "Erro ao deletar usuário"})
     end
   end
+
+  def login(conn, params) do
+    with {:ok, user} <- Verify.call(params) do
+      token = Token.sign(user)
+
+      conn
+      |> put_status(:ok)
+      |> json(%{message: "Usuário logado com sucesso", token: token})
+    else
+      {:error, "Usuário não encontrado"} ->
+        conn
+        |> put_status(:not_found)
+        |> json(%{error: "Usuário não encontrado"})
+
+      {:error, "Senha incorreta"} ->
+        conn
+        |> put_status(:unauthorized)
+        |> json(%{error: "Senha incorreta"})
+    end
+  end
+
 end
