@@ -6,7 +6,7 @@ defmodule TestWeb.NoteController do
 
   action_fallback TestWeb.FallbackController
 
-  # retorna todas as notas
+  #retorna todas as notas
   def index(conn, _params) do
     notes = Notes.list_notes()
     render(conn, :index, notes: notes)
@@ -30,14 +30,18 @@ defmodule TestWeb.NoteController do
   end
 
 
-  def getUserNotes(conn, %{"user_id" => user_id}) do
+  #retorna todas as notas de um usuario
+  def getUserNotes(conn, _params) do
+    %{user_id: user_id} = conn.assigns[:user_id]
+    IO.inspect(user_id, label: "teste")
+
     notes = Notes.getUserNotes(user_id)
     render(conn, :index, notes: notes)
   end
 
-
   def update(conn, %{"id" => id, "content" => content, "title" => title}) do
     note = Notes.get_note!(id)
+
 
     with {:ok, %Note{} = note} <- Notes.update_note(note, %{content: content, title: title}) do
       render(conn, :show, note: note)

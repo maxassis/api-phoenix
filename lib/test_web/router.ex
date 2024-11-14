@@ -34,6 +34,8 @@ defmodule TestWeb.Router do
 
     resources "/notes", NoteController
     get "/notes/user/:user_id", NoteController, :getUserNotes
+
+    get "/notes", NoteController, :index
   end
 
   # rotas de login

@@ -5,7 +5,6 @@ defmodule TestWeb.UserController do
   alias Test.Accounts.Verify
 
   def create_simple(conn, user_params) do
-    IO.inspect(user_params)
 
     case Accounts.create_simple_user(user_params) do
       {:ok, user} ->
@@ -40,7 +39,6 @@ defmodule TestWeb.UserController do
 
   def index(conn, _params) do
     users = Accounts.list_users()
-    IO.inspect(users)
 
     conn
     |> put_status(:ok)

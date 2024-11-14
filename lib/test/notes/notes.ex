@@ -106,4 +106,13 @@ defmodule Test.Notes do
     Repo.all(from n in Note, where: n.user_id == ^user_id)
   end
 
+  # def getUserNotes(user_id) do
+  #   case Repo.all(from n in Note, where: n.user_id == ^user_id) do
+  #     [] ->
+  #       {:error, "No notes found for this user."}
+  #     notes ->
+  #       {:ok, notes}
+  #   end
+  # end
+
 end
