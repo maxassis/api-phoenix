@@ -75,6 +75,28 @@ defmodule TestWeb.UserController do
     end
   end
 
+  def get_by_email(conn, %{"email" => email}) do
+    case Accounts.get_user_by_email(email) do
+      nil ->
+        conn
+        |> put_status(:not_found)
+        |> json(%{error: "Usuário nao encontrado"})
+
+      user ->
+        conn
+        |> put_status(:ok)
+        |> json(%{
+          data: %{
+            id: user.id,
+            name: user.name,
+            email: user.email
+          }
+        })
+    end
+  end
+
+
+
   def delete(conn, %{"id" => id}) do
     case Accounts.delete_user(id) do
       {:ok, _user} ->

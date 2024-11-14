@@ -19,8 +19,10 @@ defmodule TestWeb.Router do
     # cria um usuário
     post "/simple", UserController, :create_simple
 
-    # retorna um usuário
+    # retorna um usuário pelo id
     get "/:id", UserController, :get_user
+
+    post "/user_email", UserController, :get_by_email
 
     delete "/:id", UserController, :delete
   end
