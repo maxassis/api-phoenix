@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "elixir notes bruno",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

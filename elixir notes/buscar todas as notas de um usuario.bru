@@ -1,0 +1,15 @@
+meta {
+  name: buscar todas as notas de um usuario
+  type: http
+  seq: 5
+}
+
+get {
+  url: http://localhost:4000/notes
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: SFMyNTY.g2gDdAAAAAF3B3VzZXJfaWRhBW4GAHi_EDCTAWIAAVGA.ovdpp2Vqhg64VZrjJgvy0Qfdbb4iBsKePI51c1tvab0
+}

@@ -1,0 +1,22 @@
+meta {
+  name: criar nota
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:4000/notes/
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: SFMyNTY.g2gDdAAAAAF3B3VzZXJfaWRhBW4GAHi_EDCTAWIAAVGA.ovdpp2Vqhg64VZrjJgvy0Qfdbb4iBsKePI51c1tvab0
+}
+
+body:json {
+  {
+      "title": "nota com bruno",
+      "content": "conteudo da primeira nota ehheheheh !!!!"
+    }
+}
