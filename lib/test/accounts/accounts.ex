@@ -39,12 +39,7 @@ defmodule Test.Accounts do
   Returns {:ok, user} if successful.
   Returns {:error, :not_found} if user doesn't exist.
   """
-  def delete_user(id) when is_binary(id) do
-    case Integer.parse(id) do
-      {id_integer, _} -> do_delete_user(id_integer)
-      :error -> {:error, :not_found}
-    end
-  end
+
 
   def delete_user(id) when is_integer(id) do
     do_delete_user(id)

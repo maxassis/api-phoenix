@@ -14,6 +14,6 @@ defmodule Test.Notes.Note do
   def changeset(note, attrs) do
     note
     |> cast(attrs, [:title, :content, :user_id])
-    |> validate_required([:title, :content, :user_id])
+    |> validate_required([:title, :content, :user_id], on: :create)
   end
 end

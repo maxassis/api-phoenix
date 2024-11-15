@@ -13,7 +13,9 @@ defmodule TestWeb.NoteController do
   end
 
   # cria uma nova nota
-  def create(conn, %{"title" => title, "content" => content ,"user_id" => user_id }) do
+  def create(conn, %{"title" => title, "content" => content }) do
+    IO.inspect(conn, label: "conn")
+    %{user_id: user_id} = conn.assigns[:user_id]
     note_params = %{"title" => title, "content" => content, "user_id" => user_id}
 
     with {:ok, %Note{} = note} <- Notes.create_note(note_params) do
@@ -39,13 +41,21 @@ defmodule TestWeb.NoteController do
     render(conn, :index, notes: notes)
   end
 
-  def update(conn, %{"id" => id, "content" => content, "title" => title}) do
+  # altera uma nota
+  def update(conn, %{"id" => id} = params) do
     note = Notes.get_note!(id)
 
+     # Mantém os valores originais para os campos que não foram enviados
+  updated_params =
+    note
+    |> Map.from_struct()               # Converte a `struct` da `note` para um mapa
+    |> Map.merge(params)                # Mescla com os parâmetros recebidos
+    |> Map.take(["title", "content"])   # Restringe aos campos que podem ser atualizados
 
-    with {:ok, %Note{} = note} <- Notes.update_note(note, %{content: content, title: title}) do
-      render(conn, :show, note: note)
-    end
+     # Atualiza a nota
+  with {:ok, %Note{} = updated_note} <- Notes.update_note(note, updated_params) do
+    render(conn, :show, note: updated_note)
+  end
   end
 
   # deleta uma nota
